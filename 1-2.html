@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JS practice</title>
+  </head>
+
+  <body>
+    <script>
+      // 嚴謹寫法
+      "use strict";
+      // 加 var 與 分號
+      var number = 1;
+      // Variable
+      // 未定義 undefined
+      // 宣告變數沒有給值
+      var no_value;
+      console.log(number);
+
+      // null 空值
+      var variable_null = null;
+
+      // 沒宣告直接使用
+      // not_defined_variable is not defined.
+      // console.log(not_defined_variable);
+
+      // true, 不比較形態，只比較值
+      3 == "3";
+
+      // false，值跟形態都比較
+      4 === "4";
+
+      // 把字串轉成數字
+      var string = "312";
+      var number = parseInt(string);
+      console.log(number);
+
+      // 把數字轉成字串
+      var float = 123.123;
+      var string = float.toString();
+      console.log(string);
+
+      // quiz_1 = undefined
+      var quiz_1;
+      var num = !quiz_1;
+      console.log(num);
+
+      console.log(!num);
+
+      var test1 = 2;
+      var test2 = 2;
+      var test3 = 2;
+      var test4 = 2;
+
+      // 3
+      test1 += 1;
+      console.log(test1);
+      // console.log(test1);
+      // 1
+      test2 --;
+      console.log(test2);
+      // 2
+      test3 ++;
+      console.log(test3);
+      // 0
+      test4 -= 2;
+      console.log(test4);
+
+
+    </script>
+  </body>
+</html>
