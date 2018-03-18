@@ -22,7 +22,7 @@ arr2 = [2, 3, 4]
 test = arr1 + arr2
 puts "#{test}"
 
-'''
+=begin
 先加起來？然後排序？接著逐個掃 把重複的用 .delete_at 移掉？
 .delete 會把所有該元素移掉
 有印象之前這邊用的是 for 來處理
@@ -30,7 +30,7 @@ puts "#{test}"
 陣列是用 sort
 ......Ruby 裡沒有 "++" 啦，debug 老半天
 = =，解答有問題。
-'''
+=end
 
 test = test.sort
 
