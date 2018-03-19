@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ToggleLight</title>
+
+  <script>
+    // 宣告開關燈狀態
+    var state = true;
+
+    // 電燈開關
+    function toggleLight() {
+      // 取得圖片的 element
+      var image = document.getElementById("image");
+
+      // 判斷圖片狀態，並切換圖片
+      // 切換狀態，WHY？
+      state = !state;
+      // 切換圖片
+      image.src = state ? "on.jpg" : "off.jpg";
+    }
+
+    var image = document.getElementById("image");
+    var timeLeft = 0;
+    var id = 0;
+
+    function timerStart() {
+      // 儲存倒數計時的數字？應該就是從五秒開始倒數吧？
+      // 設定 timer
+      timeLeft = document.getElementById("timerInput").value;
+      console.log(timeLeft);
+      timeLeft = Number(timeLeft);
+      console.log(timeLeft);
+      if (timeLeft === 10) {
+        console.log("timeLeft = 10");
+      } else if (timeLeft === "10"){
+        console.log("timeLeft = \"10\"");
+      }
+      if (timeLeft === "" || isNaN(timeLeft)) {
+        alert("Please enter the number of second for timer.");
+        return ;
+      }
+
+      // 開始倒數
+      id = setInterval(countDownTimer, 1000);
+    }
+
+    // 倒數計時 function，每執行一次就少一秒。
+    function countDownTimer() {
+
+      timeLeft = timeLeft - 1;
+
+      if (timeLeft <= 0) {
+        document.getElementById("image").src = "off.jpg";
+        clearInterval(id);
+        state = false;
+        console.log("state =", state);
+      }
+
+      document.getElementById("timer").innerHTML = timeLeft;
+    }
+  </script>
+</head>
+
+<body>
+  <!-- ON/OFF 圖片 -->
+  <img id="image" src="on.jpg">
+
+  <!-- 電燈開關 -->
+  <button class="button" onclick="toggleLight()">ON<br />-----<br />OFF</button>
+
+  <!-- 倒數計時秒數設定 -->
+  <input type="text" id="timerInput" value="">
+
+  <!-- 倒數計時開始按鈕 -->
+  <button type="button" onclick="timerStart()">Start</button>
+
+  <!-- 顯示倒數剩餘秒數 -->
+  <div class="">
+    Timer: <span class="div" id="timer"></span>
+  </div>
+
+</body>
+
+</html>
