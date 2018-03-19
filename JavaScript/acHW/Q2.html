@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ID_Validate Practice</title>
+  <script>
+    function validate() {
+      var result = document.getElementById("result");
+      result.innerHTML = "";
+
+      // value 值預設爲 字串。
+      var user_id = document.getElementById("user_id").value;
+
+      result.innerHTML = "未通過驗證！";
+
+      if (user_id === "") {
+        alert("請輸入ID！");
+        result.innerHTML = "未通過驗證！";
+        // break;
+      } else if (!isNaN(user_id[0])) {
+        alert("ID第一個字應爲英文！");
+        result.innerHTML = "未通過驗證！";
+        // break;
+      } else if (user_id.length != 10) {
+        alert("ID長度不正確！");
+        result.innerHTML = "未通過驗證！";
+        // break;
+      } else if (Number(user_id[1]) === 1) {
+        result.innerHTML = "男ID通過驗證。";
+      }
+      else if (Number(user_id[1]) === 2) {
+        result.innerHTML = "女ID通過驗證！";
+      }
+    }
+
+  </script>
+</head>
+
+<body>
+  <input type="text" id="user_id">
+  <input type="button" name="" value="驗證" onclick="validate()">
+  <p id="result"></p>
+</body>
+
+</html>
