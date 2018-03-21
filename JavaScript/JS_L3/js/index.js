@@ -124,6 +124,18 @@ function endTurn() {
 // 攻擊開始後隱藏攻擊按鈕
 function heroAttack() {
   document.getelementsByClassName("skill-block")[0].style.display = "none";
-}
 
-// 設定英雄與怪物動作的時間軸
+  // 設定英雄與怪物動作的時間軸
+  // window method： setTimeout
+  // 點擊按鈕過了 100ms 後，加入 已經設定好的 CSS class 讓英雄移動
+  setTimeout(function(){
+    hero.element.classList.add("attacking");
+
+    // 英雄移動完之後 500ms，進行攻擊，並歸位
+    setTimeout(function() {
+      hero.attack(monster);
+      hero.element.classList.remove("attacking");
+    }, 500);
+  }, 100);
+
+}
