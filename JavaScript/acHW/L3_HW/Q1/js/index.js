@@ -38,6 +38,9 @@ class BaseCharacter {
 
         // 顯示傷害數字，加入已經設定好的 CSS class .attacked
         _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
+
+        // 設定傷害數字
+        _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
       }
 
       // 取得下一個特效圖片
@@ -66,9 +69,10 @@ class BaseCharacter {
 
     }
 
-  }
+  };
 
-  die() {
+  //
+  die(){
     this.alive = false;
   }
 
