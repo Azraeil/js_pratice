@@ -123,12 +123,12 @@ function endTurn() {
 
 // 攻擊開始後隱藏攻擊按鈕
 function heroAttack() {
-  document.getelementsByClassName("skill-block")[0].style.display = "none";
+  document.getElementsByClassName("skill-block")[0].style.display = "none";
 
   // 設定英雄與怪物動作的時間軸
   // window method： setTimeout
   // 點擊按鈕過了 100ms 後，加入 已經設定好的 CSS class 讓英雄移動
-  setTimeout(function(){
+  setTimeout(function() {
     hero.element.classList.add("attacking");
 
     // 英雄移動完之後 500ms，進行攻擊，並歸位
@@ -137,5 +137,31 @@ function heroAttack() {
       hero.element.classList.remove("attacking");
     }, 500);
   }, 100);
+
+  // 怪獸移動，因爲是寫在同一個 function 內
+  // 所以觸發時間要從按下英雄攻擊鈕開始算: 100 + 500 + 500 =1100
+  setTimeout(function() {
+    // 如果怪獸還活著才進行移動與攻擊
+    if (monster.alive) {
+      // 怪獸移動
+      monster.element.classList.add("attacking");
+
+      // 怪獸攻擊與歸位
+      setTimeout(function() {
+        monster.attack(hero);
+        monster.element.classList.remove("attacking");
+        endTurn();
+        if (hero.alive == false) {
+          // 遊戲結束
+        } else {
+          document.getElementsByClassName("skill-block")[0].style.display = "block";
+        }
+
+      }, 500);
+
+    } else {
+      // 遊戲結束
+    }
+  }, 1100);
 
 }
