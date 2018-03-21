@@ -20,6 +20,9 @@ class BaseCharacter {
     if (this.hp <= 0) {
       this.die();
     }
+    else if (this.hp > this.maxHp) {
+      this.hp = this.maxHp;
+    }
 
     // 加入特效與傷害數字
     // this 在不同的情況下，會對應到不同的物件。
@@ -55,9 +58,14 @@ class BaseCharacter {
         _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
         clearInterval(_this.id);
       }
-    };
 
-    _this.id = setInterval(effectImage, 50);
+    // 用 damage 判斷是要攻擊還是補血
+    if (damage > 0) {
+      _this.id = setInterval(effectImage, 50);
+    } else {
+
+    }
+
   }
 
   die() {
@@ -99,6 +107,12 @@ class Hero extends BaseCharacter {
     super.attack(character, Math.floor(damage));
   }
 
+  heal() {
+    var healPoint = -30;
+
+    this.getHurt(healPoint);
+  }
+
   getHurt(damage) {
     super.getHurt(damage);
     this.updateHtml(this.hpElement, this.hurtElement);
@@ -136,11 +150,18 @@ class Monster extends BaseCharacter {
 var hero = new Hero("C8763", 130, 30);
 var monster = new Monster("Skeleton", 130, 10);
 
-// 英雄攻擊開始設定
+// 英雄行動開始設定
 function addSkillEvent() {
   var skill = document.getElementById("skill");
+  // 按下攻擊按鈕
   skill.onclick = function() {
     heroAttack();
+  }
+
+  var heal = document.getElementById("heal");
+  // 按下補血按鈕
+  heal.onclick = function() {
+    heroHeal();
   }
 }
 addSkillEvent();
@@ -175,6 +196,24 @@ function heroAttack() {
     }, 500);
   }, 100);
 
+  // 怪物攻擊
+  monsterAttack();
+
+}
+
+// 判斷勝負，再次挑戰按鈕
+function finish() {
+  var dialog = document.getElementById(("dialog"));
+  dialog.style.display = "block";
+
+  if (monster.alive === false) {
+    dialog.classList.add("win");
+  } else {
+    dialog.classList.add("lose");
+  }
+}
+
+function monsterAttack() {
   // 怪獸移動，因爲是寫在同一個 function 內
   // 所以觸發時間要從按下英雄攻擊鈕開始算: 100 + 500 + 500 =1100
   setTimeout(function() {
@@ -202,17 +241,24 @@ function heroAttack() {
       finish();
     }
   }, 1100);
-
 }
 
-// 判斷勝負，再次挑戰按鈕
-function finish() {
-  var dialog = document.getElementById(("dialog"));
-  dialog.style.display = "block";
+function heroHeal() {
+  document.getElementsByClassName("skill-block")[0].style.display = "none";
 
-  if (monster.alive === false) {
-    dialog.classList.add("win");
-  } else {
-    dialog.classList.add("lose");
-  }
+  // 設定英雄與怪物動作的時間軸
+  // window method： setTimeout
+  // 點擊按鈕過了 100ms 後，加入 已經設定好的 CSS class 讓英雄移動
+  setTimeout(function() {
+    hero.element.classList.add("healing");
+
+    // 英雄移動完之後 500ms，進行攻擊，並歸位
+    setTimeout(function() {
+      hero.heal();
+      hero.element.classList.remove("healing");
+    }, 500);
+  }, 100);
+
+  // 怪獸攻擊
+  monsterAttack();
 }
