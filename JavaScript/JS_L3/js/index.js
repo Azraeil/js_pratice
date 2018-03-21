@@ -20,6 +20,44 @@ class BaseCharacter {
     if (this.hp <= 0) {
       this.die();
     }
+
+    // 加入特效與傷害數字
+    // this 在不同的情況下，會對應到不同的物件。
+    // 所以先把 BaseCharacter object 用 _this 暫存起來
+    var _this = this;
+    // i 用來設定連續播放特效的圖片編號
+    var i = 1;
+
+    var effectImage = function() {
+      if (i === 1) {
+        // 把隱藏的 effect-image element 設爲顯示
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+
+        // 顯示傷害數字，加入已經設定好的 CSS class .attacked
+        _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
+      }
+
+      // 取得下一個特效圖片
+      _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/blade/" + i + ".png";
+
+      i++;
+
+      // console.log(i);
+
+      if (i > 8) {
+        // 特效圖片顯示關閉
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
+
+        // 移除 傷害文字 CSS class .attacked
+        _this.element.getElementsByClassName("hurt-text")[0].classList.remove("attacked");
+
+        // 清空傷害文字
+        _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
+        clearInterval(_this.id);
+      }
+    };
+
+    _this.id = setInterval(effectImage, 50);
   }
 
   die() {
@@ -65,7 +103,6 @@ class Hero extends BaseCharacter {
     super.getHurt(damage);
     this.updateHtml(this.hpElement, this.hurtElement);
   }
-
 }
 
 class Monster extends BaseCharacter {
@@ -117,7 +154,7 @@ function endTurn() {
   document.getElementById("round-num").textContent = rounds;
   if (rounds < 1) {
     // 遊戲結束
-
+    finish();
   }
 }
 
@@ -153,6 +190,7 @@ function heroAttack() {
         endTurn();
         if (hero.alive == false) {
           // 遊戲結束
+          finish();
         } else {
           document.getElementsByClassName("skill-block")[0].style.display = "block";
         }
@@ -161,7 +199,20 @@ function heroAttack() {
 
     } else {
       // 遊戲結束
+      finish();
     }
   }, 1100);
 
+}
+
+// 判斷勝負，再次挑戰按鈕
+function finish() {
+  var dialog = document.getElementById(("dialog"));
+  dialog.style.display = "block";
+
+  if (monster.alive === false) {
+    dialog.classList.add("win");
+  } else {
+    dialog.classList.add("lose");
+  }
 }
