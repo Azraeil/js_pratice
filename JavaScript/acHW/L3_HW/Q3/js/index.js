@@ -87,14 +87,14 @@ class BaseCharacter {
   healImage(damage) {
     if (i === 1) {
       // 把隱藏的 effect-image element 設爲顯示
-      // _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+      _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
 
       // 顯示補血數字，加入已經設定好的 CSS class .attacked
       _this.element.getElementsByClassName("heal-text")[0].classList.add("attacked");
     }
 
     // 取得下一個特效圖片
-    // _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/blade/" + i + ".png";
+    _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/heal/" + i + ".png";
 
     i++;
 
