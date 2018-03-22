@@ -33,7 +33,20 @@ class BaseCharacter {
     // i 用來設定連續播放特效的圖片編號
     i = 1;
     // 呼叫動畫特效
-    _this.effectImage(damage);
+    if (damage > 0) {
+      // 設定傷害數字
+      _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
+      // 重複呼叫攻擊特效動畫
+      _this.id = setInterval(_this.effectImage, 50);
+      // console.log("id=", _this.id);
+    } else {
+      // 設定補血數字
+      _this.element.getElementsByClassName("heal-text")[0].textContent = -damage;
+      // 重複呼叫補血特效動畫
+      _this.id = setInterval(_this.healImage, 50);
+      // console.log("id=", _this.id);
+    }
+
   } //getHurt
 
   effectImage(damage) {
@@ -44,8 +57,8 @@ class BaseCharacter {
       // 顯示傷害數字，加入已經設定好的 CSS class .attacked
       _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
 
-      // 設定傷害數字
-      _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
+
+      // _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
 
     }
 
@@ -65,21 +78,44 @@ class BaseCharacter {
 
       // 清空傷害文字
       _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
+      // console.log("id=", _this.id);
       clearInterval(_this.id);
-    }
-
-    // 用 damage 判斷是要攻擊還是補血
-    if (damage > 0) {
-      _this.id = setInterval(_this.effectImage, 50);
-
-    } else {
-
     }
 
   } //effectImage
 
+  healImage(damage) {
+    if (i === 1) {
+      // 把隱藏的 effect-image element 設爲顯示
+      // _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+
+      // 顯示補血數字，加入已經設定好的 CSS class .attacked
+      _this.element.getElementsByClassName("heal-text")[0].classList.add("attacked");
+    }
+
+    // 取得下一個特效圖片
+    // _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/blade/" + i + ".png";
+
+    i++;
+
+    // console.log(i);
+
+    if (i > 8) {
+      // 特效圖片顯示關閉
+      _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
+
+      // 移除 傷害文字 CSS class .attacked
+      _this.element.getElementsByClassName("heal-text")[0].classList.remove("attacked");
+
+      // 清空傷害文字
+      _this.element.getElementsByClassName("heal-text")[0].textContent = "";
+      clearInterval(_this.id);
+    }
+
+  } //healImage
+
   //
-  die(){
+  die() {
     this.alive = false;
   }
 
