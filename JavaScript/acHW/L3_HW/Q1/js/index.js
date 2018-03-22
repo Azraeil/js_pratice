@@ -15,61 +15,68 @@ class BaseCharacter {
     character.getHurt(damage);
   }
 
+  // var _this ="" ;
+  // var i = 1;
+
   getHurt(damage) {
     this.hp -= damage;
     if (this.hp <= 0) {
       this.die();
-    }
-    else if (this.hp > this.maxHp) {
+    } else if (this.hp > this.maxHp) {
       this.hp = this.maxHp;
     }
 
     // 加入特效與傷害數字
     // this 在不同的情況下，會對應到不同的物件。
     // 所以先把 BaseCharacter object 用 _this 暫存起來
-    var _this = this;
+    _this = this;
     // i 用來設定連續播放特效的圖片編號
-    var i = 1;
+    i = 1;
+    // 呼叫動畫特效
+    _this.effectImage(damage);
+  } //getHurt
 
-    var effectImage = function() {
-      if (i === 1) {
-        // 把隱藏的 effect-image element 設爲顯示
-        _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+  effectImage(damage) {
+    if (i === 1) {
+      // 把隱藏的 effect-image element 設爲顯示
+      _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
 
-        // 顯示傷害數字，加入已經設定好的 CSS class .attacked
-        _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
+      // 顯示傷害數字，加入已經設定好的 CSS class .attacked
+      _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
 
-        // 設定傷害數字
-        _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
-      }
+      // 設定傷害數字
+      _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
 
-      // 取得下一個特效圖片
-      _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/blade/" + i + ".png";
+    }
 
-      i++;
+    // 取得下一個特效圖片
+    _this.element.getElementsByClassName("effect-image")[0].src = "images/effect/blade/" + i + ".png";
 
-      // console.log(i);
+    i++;
 
-      if (i > 8) {
-        // 特效圖片顯示關閉
-        _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
+    // console.log(i);
 
-        // 移除 傷害文字 CSS class .attacked
-        _this.element.getElementsByClassName("hurt-text")[0].classList.remove("attacked");
+    if (i > 8) {
+      // 特效圖片顯示關閉
+      _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
 
-        // 清空傷害文字
-        _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
-        clearInterval(_this.id);
-      }
+      // 移除 傷害文字 CSS class .attacked
+      _this.element.getElementsByClassName("hurt-text")[0].classList.remove("attacked");
+
+      // 清空傷害文字
+      _this.element.getElementsByClassName("hurt-text")[0].textContent = "";
+      clearInterval(_this.id);
+    }
 
     // 用 damage 判斷是要攻擊還是補血
     if (damage > 0) {
-      _this.id = setInterval(effectImage, 50);
+      _this.id = setInterval(_this.effectImage, 50);
+
     } else {
 
     }
 
-  };
+  } //effectImage
 
   //
   die(){
@@ -153,6 +160,15 @@ class Monster extends BaseCharacter {
 
 var hero = new Hero("C8763", 130, 30);
 var monster = new Monster("Skeleton", 130, 10);
+
+// 加入特效與傷害數字
+// this 在不同的情況下，會對應到不同的物件。
+// 所以先把 BaseCharacter object 用 _this 暫存起來
+var _this = "";
+
+// i 用來設定連續播放特效的圖片編號
+var i = 1;
+
 
 // 英雄行動開始設定
 function addSkillEvent() {
