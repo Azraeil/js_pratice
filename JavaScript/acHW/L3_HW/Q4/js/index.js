@@ -205,6 +205,8 @@ var _this = "";
 // i 用來設定連續播放特效的圖片編號
 var i = 1;
 
+// 避免按鍵重複輸入觸發事件
+var fired = false;
 
 // 英雄行動開始設定
 function addSkillEvent() {
@@ -212,13 +214,39 @@ function addSkillEvent() {
   // 按下攻擊按鈕
   skill.onclick = function() {
     heroAttack();
-  }
+    fired = true;
+  };
 
   var heal = document.getElementById("heal");
   // 按下補血按鈕
   heal.onclick = function() {
     heroHeal();
-  }
+    fired = true;
+  };
+
+  // 按鍵觸發英雄攻擊/補血
+  document.onkeyup = function(event) {
+    console.log(fired);
+
+    // 將代表字元的數字轉換成字母，猜測是 ACSII
+    var key = String.fromCharCode(event.keyCode);
+    console.log(key);
+
+    if (fired === false && (key === "A" || key === "D") ) {
+      // 防止按鍵重複輸入造成行爲異常
+      fired = true;
+
+      // 設定觸發條件
+      if (key === "A") {
+        heroAttack();
+      }
+
+      if (key === "D") {
+        heroHeal();
+      }
+    }
+  };
+
 }
 addSkillEvent();
 
@@ -233,6 +261,9 @@ function endTurn() {
     // 遊戲結束
     finish();
   }
+
+  // 允許鍵盤按鍵輸入觸發事件
+  fired = false;
 }
 
 // 攻擊開始後隱藏攻擊按鈕
@@ -267,6 +298,7 @@ function finish() {
   } else {
     dialog.classList.add("lose");
   }
+
 }
 
 function monsterAttack() {
