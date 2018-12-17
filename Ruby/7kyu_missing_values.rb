@@ -36,3 +36,6 @@ missing_values([27, 65, 44, 39, 44, 21, 21, 44, 65, 39, 21, 65])
 
 # 有個參考答案挺讚的用 .uniq 之後用 sort_by {|x| array.count(x)} 排序
 # 前兩個就是 x 與 y 了
+
+# 同學提供一個更棒的...
+#  a.find{|x| a.count(x) == 2} * a.find{|x| a.count(x) == 1}**2
