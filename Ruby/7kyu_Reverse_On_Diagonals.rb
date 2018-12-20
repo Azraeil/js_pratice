@@ -29,24 +29,24 @@ matrix[1][-2], matrix[-2][1] = matrix[-2][1], matrix[1][-2]
 從上面的規律可以觀察出元素索引值要獨立出來處理比較好
 # end
 def reverse_on_diagonals(matrix)
-  first_array_index = 0
-  last_array_index = -1
-  first_element_index = 0
-  last_element_index = -1
+  top_array_index = 0
+  bottom_array_index = -1
+  left_element_index = 0
+  right_element_index = -1
 
   (matrix.length/2).times do
     # the top left corner to the bottom right one
-    matrix[first_array_index][first_element_index], matrix[last_array_index][last_element_index] = \
-    matrix[last_array_index][last_element_index], matrix[first_array_index][first_element_index]
+    matrix[top_array_index][left_element_index], matrix[bottom_array_index][right_element_index] = \
+    matrix[bottom_array_index][right_element_index], matrix[top_array_index][left_element_index]
 
     # the top right corner to the bottom left one
-    matrix[first_array_index][last_element_index], matrix[last_array_index][first_element_index] = \
-    matrix[last_array_index][first_element_index], matrix[first_array_index][last_element_index]
+    matrix[top_array_index][right_element_index], matrix[bottom_array_index][left_element_index] = \
+    matrix[bottom_array_index][left_element_index], matrix[top_array_index][right_element_index]
 
-    first_array_index += 1
-    last_array_index -= 1
-    first_element_index += 1
-    last_element_index -= 1
+    top_array_index += 1
+    bottom_array_index -= 1
+    left_element_index += 1
+    right_element_index -= 1
   end
 
   return matrix
