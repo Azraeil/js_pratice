@@ -27,7 +27,7 @@ matrix[1][-2], matrix[-2][1] = matrix[-2][1], matrix[1][-2]
 接著逐個陣列掃瞄並移動 index 進行互換
 還有關鍵是掃描幾行，假設有 n 行，那應該是掃 n / 2 行?
 從上面的規律可以觀察出元素索引值要獨立出來處理比較好
-# end
+=end
 def reverse_on_diagonals(matrix)
   top_array_index = 0
   bottom_array_index = -1
