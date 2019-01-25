@@ -1,4 +1,4 @@
-require_relative './7kyu_tricky_doubles.rb'
+require_relative '../lib/7kyu_tricky_doubles.rb'
 RSpec.describe "檢驗 tricky double" do
   it "輸入 15 應該得到 30" do
     result = tricky_doubles(15)

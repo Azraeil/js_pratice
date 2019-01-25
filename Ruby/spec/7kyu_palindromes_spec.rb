@@ -1,4 +1,4 @@
-require_relative './7kyu_palindromes_here_and_there.rb'
+require_relative '../lib/7kyu_palindromes_here_and_there.rb'
 
 RSpec.describe "回文數轉換" do
   it "輸入 [101, 2, 85, 33, 14014] 輸出 [1, 1, 0, 1, 0]" do
