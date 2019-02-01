@@ -13,13 +13,8 @@ while n != 1
 def collatz(n)
   result = [n]
   while n != 1
-    if n.even?
-      n /= 2
-      result << n
-    else
-      n = n*3 + 1
-      result << n
-    end
+    n = n.even? ? n/2:n*3+1 
+    result << n
   end
   return result.size
 end
